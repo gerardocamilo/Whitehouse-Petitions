@@ -24,20 +24,19 @@ class ViewController: UITableViewController {
         }
         
         if let url = URL(string: urlString) {
+            
             if let data = try? Data(contentsOf: url) {
+                
                 let json = try? JSON(data: data)
                 
                 if json?["metadata"]["responseInfo"]["status"].intValue == 200 {
-                        parse(json: json!)
-                } else {
-                    showError()
+                    parse(json: json!)
+                    return
                 }
-            } else {
-                showError()
             }
-        } else {
-            showError()
         }
+        
+        showError()
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
